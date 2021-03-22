@@ -15,4 +15,6 @@ mongoose.connection
 
 app.use(express.json())
 
+routes(app)
+
 module.exports = app
