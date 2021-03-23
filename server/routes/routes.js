@@ -4,6 +4,6 @@ module.exports = app => {
 
   app.get('/api', BacklinksController.greeting),
 
-  app.post('/api/signup', BacklinksController.signup)
+  app.post('/api/user/signup', BacklinksController.signup)
 
 }
