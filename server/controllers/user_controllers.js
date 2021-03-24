@@ -1,6 +1,7 @@
 const { request } = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
 
@@ -35,18 +36,21 @@ module.exports = {
   },
 
   login(req, res) {
+    let userData = {}
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
           return res.status(404).send(`${req.body.email} is not associated with any registered account.`)
         } 
+        userData.user = user
         return bcrypt.compare(req.body.password, user.password)
       })
       .then(validPassword => {
         if (!validPassword) {
           return res.status(401).send('The email or password entered is incorrect.')
-        } 
-        res.send(true)
+        }
+        const token = jwt.sign({ _id: userData.user._id}, 'CHANGE_ME')
+        res.send(token)
       })
   }
 }
