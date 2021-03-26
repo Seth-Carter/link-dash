@@ -10,5 +10,4 @@ module.exports = app => {
 
   app.post('/api/user/login', UserController.login)
   
-
 }

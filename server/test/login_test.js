@@ -20,7 +20,8 @@ describe('The login route', () => {
           .post('/api/user/login')
           .send({ email: joe.email, password: joe.password })
           .end((err, res) => {
-            assert(res.text === 'Login succeeded!')
+            const responseObject = JSON.parse(res.text)
+            assert(responseObject.email === joe.email)
             done()
           })
       })

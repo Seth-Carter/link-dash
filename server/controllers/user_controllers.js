@@ -2,6 +2,7 @@ const { request } = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const config = require('config')
 
 module.exports = {
 
@@ -49,8 +50,12 @@ module.exports = {
         if (!validPassword) {
           return res.status(401).send('The email or password entered is incorrect.')
         }
-        const token = jwt.sign({ _id: userData.user._id}, 'CHANGE_ME')
-        res.send(token)
+        const token = jwt.sign({ _id: userData.user._id}, config.get('PrivateKey'))
+        res.header('Authorization', `Bearer ${token}`).send({ 
+          _id: userData.user._id,
+          name: userData.user.name,
+          email: userData.user.email
+        })
       })
   }
 }
