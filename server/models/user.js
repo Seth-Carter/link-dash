@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Name is required.'],
     minlength: 5,
-    maxlength: 50
+    maxlength: 50,
   },
   email: {
     type: String,
@@ -15,16 +15,16 @@ const UserSchema = new Schema({
     maxlength: 255,
     unique: true,
     match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 
-      'Please input a valid email address.'
-    ]
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Please input a valid email address.',
+    ],
   },
   password: {
     type: String,
     required: [true, 'Password is required'],
     minlength: 5,
-    maxlength: 1024
-  }
+    maxlength: 1024,
+  },
 })
 
 const User = mongoose.model('user', UserSchema)

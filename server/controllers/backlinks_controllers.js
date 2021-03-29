@@ -1,5 +1,3 @@
 const { request } = require('express')
 
-module.exports = {
-
-}
+module.exports = {}

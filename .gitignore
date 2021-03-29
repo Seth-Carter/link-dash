@@ -1,3 +1,9 @@
+#Config files
+config/
+
+#Prettier
+.prettierrc.json
+
 # Logs
 logs
 *.log

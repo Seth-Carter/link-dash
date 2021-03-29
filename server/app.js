@@ -5,8 +5,9 @@ const config = require('config')
 const app = express()
 
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect('mongodb://localhost/linkdash', { 
-    useNewUrlParser: true, useUnifiedTopology: true 
+  mongoose.connect('mongodb://localhost/linkdash', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
 }
 
@@ -17,7 +18,7 @@ if (!config.get('PrivateKey')) {
 
 mongoose.connection
   .once('open', () => console.log('Database connected!'))
-  .on('error', error => {
+  .on('error', (error) => {
     console.warn('Warning!', error)
   })
 
