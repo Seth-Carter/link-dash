@@ -1,10 +1,10 @@
-const { request } = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
 module.exports = {
+
   greeting(req, res) {
     res.send({ message: "What's up, man?" })
   },
@@ -18,13 +18,13 @@ module.exports = {
           return res
             .status(409)
             .send(
-              `${existingUser.email} is taken. Choose a different email address!`,
+              `${existingUser.email} is taken. Choose a different email address!`
             )
         } else {
           let user = new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: req.body.password
           })
           bcrypt
             .hash(user.password, saltRounds)
@@ -46,7 +46,7 @@ module.exports = {
           return res
             .status(404)
             .send(
-              `${req.body.email} is not associated with any registered account.`,
+              `${req.body.email} is not associated with any registered account.`
             )
         }
         userData.user = user
@@ -60,13 +60,14 @@ module.exports = {
         }
         const token = jwt.sign(
           { _id: userData.user._id },
-          config.get('PrivateKey'),
+          config.get('PrivateKey')
         )
         res.header('Authorization', `Bearer ${token}`).send({
           _id: userData.user._id,
           name: userData.user.name,
-          email: userData.user.email,
+          email: userData.user.email
         })
       })
-  },
+      .catch((err) => console.error(err))
+  }
 }

@@ -6,7 +6,7 @@ const VendorSchema = new Schema({
   email: String,
   domains: [
     {
-      type: String,
-    },
-  ],
+      type: String
+    }
+  ]
 })

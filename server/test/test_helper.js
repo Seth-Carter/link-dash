@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 before((done) => {
   mongoose.connect('mongodb://localhost/linkdash_test', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   mongoose.connection
     .on('open', () => {

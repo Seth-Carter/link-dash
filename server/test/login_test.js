@@ -7,7 +7,7 @@ describe('The login route', () => {
   let joe = {
     name: 'Joseph',
     email: 'joe@email.com',
-    password: 'Password123',
+    password: 'Password123'
   }
 
   it('allows a user to successfully log in', (done) => {

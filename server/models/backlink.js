@@ -12,7 +12,6 @@ const BacklinkSchema = new Schema({
   },
   dateOrdered: {
     type: Date,
-    required: true,
     default: Date.now
   },
   contentLanguage: {
@@ -39,12 +38,12 @@ const BacklinkSchema = new Schema({
   price: {
     type: mongoose.Decimal128,
     set: (i) => mongoose.Types.Decimal128.fromString(i.toFixed(2)),
-    default: 0,
+    default: 0
   },
   currency: {
     type: String,
-    match: [/^[A-Z]{3}$/, 'Please input a valid ISO 4217 currency code.'],
-  },
+    match: [/^[A-Z]{3}$/, 'Please input a valid ISO 4217 currency code.']
+  }
 })
 
 const Backlink = mongoose.model('backlink', BacklinkSchema)

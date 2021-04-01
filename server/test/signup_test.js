@@ -8,7 +8,7 @@ describe('The signup route', () => {
     const userProps = {
       name: 'Johnny',
       email: 'john@email.com',
-      password: 'Password123',
+      password: 'Password123'
     }
     request(app)
       .post('/api/user/signup')

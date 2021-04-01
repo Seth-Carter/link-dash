@@ -7,7 +7,7 @@ const app = express()
 if (process.env.NODE_ENV !== 'test') {
   mongoose.connect('mongodb://localhost/linkdash', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
 }
 
