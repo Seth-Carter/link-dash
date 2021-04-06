@@ -5,5 +5,7 @@ app.listen(3000, () => {
 })
 
 process.once('SIGUSR2', () => {
-  process.kill(process.pid, 'SIGUSR2')
+  server.close(() => {
+    process.kill(process.pid, 'SIGUSR2')
+  })
 })

@@ -12,7 +12,8 @@ const BacklinkSchema = new Schema({
   },
   dateOrdered: {
     type: Date,
-    default: Date.now
+    required: true,
+    // default: Date.now
   },
   contentLanguage: {
     type: String,
