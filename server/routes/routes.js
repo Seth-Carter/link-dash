@@ -10,4 +10,7 @@ module.exports = (app) => {
   app.post('/api/user/login', UserController.login),
 
   app.post('/api/backlink/new', BacklinksController.createBacklink)
+
+  //TODO: This route needs pagination 
+  app.post('/api/backlink/fetch', BacklinksController.fetchBacklinks)
 }

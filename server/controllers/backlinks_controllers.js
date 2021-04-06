@@ -2,7 +2,6 @@ const Backlink = require('../models/backlink')
 
 module.exports = {
   createBacklink(req, res) {
-    console.log(req.body.dateOrdered)
     const backlink = new Backlink({
       vendor: req.body.vendor,
       orderStatus: req.body.orderStatus,
@@ -23,7 +22,11 @@ module.exports = {
 
   },
 
-  searchBacklinks(req, res) {
-
+  fetchBacklinks(req, res) {
+    Backlink.find({})
+      .then((backlinks) => {
+        res.send(backlinks)
+      })
+      .catch((err) => res.status(422).send({ error: err.message}))
   }
 }
