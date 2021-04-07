@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import currencyMap from '../utils/currency_map'
 
 const Home = () => {
   const [data, setData] = useState() 
@@ -19,6 +21,9 @@ const Home = () => {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell padding="checkbox">
+              <Checkbox/>
+            </TableCell>
             <TableCell>Target URL</TableCell>
             <TableCell>Backlink URL</TableCell>
             <TableCell>Vendor</TableCell>
@@ -31,13 +36,16 @@ const Home = () => {
         <TableBody>
           {data && data.map((row) => (
             <TableRow component="th" scope="row">
+              <TableCell padding="checkbox">
+                <Checkbox/>
+              </TableCell>
               <TableCell>{row.targetUrl}</TableCell>
               <TableCell>{row.backlinkUrl}</TableCell>
               <TableCell>{row.vendor}</TableCell>
-              <TableCell>{row.dateOrdered}</TableCell>
+              <TableCell>{dayjs(row.dateOrdered).format('MMMM D, YYYY')}</TableCell>
               <TableCell>{row.orderStatus}</TableCell>
               <TableCell>{row.contentLanguage}</TableCell>
-              <TableCell>{row.price.$numberDecimal}</TableCell>
+              <TableCell>{currencyMap[row.currency]??currencyMap[row.currency]}{row.price.$numberDecimal}</TableCell>
             </TableRow>
           ))}
         </TableBody>
