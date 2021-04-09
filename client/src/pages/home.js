@@ -8,6 +8,7 @@ const Home = () => {
   const [data, setData] = useState() 
   
   useEffect(() => {
+    //Change this later to some kind of configuration file
     axios.post('http://localhost:3000/api/backlink/fetch')
       .then(response => {
         console.log(response.data)
