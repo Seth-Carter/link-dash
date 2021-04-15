@@ -19,12 +19,12 @@ const Home = () => {
   
   useEffect(() => {
     //Change this later to some kind of configuration file
-    axios.post('http://localhost:3000/api/backlink/fetch')
+    axios.post('http://localhost:3050/api/backlink/fetch')
       .then(response => {
         setData(response.data)
       })
       .catch(err => console.error(err) )
-  }, [])
+  }, [data])
 
   return (
     <>
@@ -62,7 +62,7 @@ const Home = () => {
         </TableBody>
       </Table>
     </TableContainer>
-    <AddBacklinks/>
+    <AddBacklinks tableState={data}/>
     </>
   )
 }

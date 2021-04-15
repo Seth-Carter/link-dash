@@ -1,4 +1,4 @@
-import React, { useEffect, useState }from 'react'
+import React, { useState }from 'react'
 import DateFnsUtils from '@date-io/date-fns'
 import { makeStyles } from '@material-ui/core/styles'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
@@ -141,7 +141,6 @@ const AddBacklink = () => {
                     <MenuItem value="complete">Complete</MenuItem>
                   </Select>
                 </FormControl>
-                <p>You selected: {formValues.orderStatus}</p>
               </Grid>
             </Grid>
             <div>
@@ -150,7 +149,7 @@ const AddBacklink = () => {
                 fullWidth
                 label="Vendor"
                 name="vendor"
-                value={formValues.backlinkUrl}
+                value={formValues.vendor}
                 onChange={handleInputChange}
               />
             </div>
@@ -160,7 +159,7 @@ const AddBacklink = () => {
                 fullWidth
                 label="Language"
                 name="language"
-                value={formValues.backlinkUrl}
+                value={formValues.language}
                 onChange={handleInputChange}
               />
             </div>
@@ -170,7 +169,7 @@ const AddBacklink = () => {
                 fullWidth
                 label="Price"
                 name="price"
-                value={formValues.backlinkUrl}
+                value={formValues.price}
                 onChange={handleInputChange}
               />
             </div>
