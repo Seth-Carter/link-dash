@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import axios from 'axios'
 import dayjs from 'dayjs'
 import currencyMap from '../utils/currency_map'
-import AddBacklinks from '../components/add_backlink'
+import AddBacklink from '../components/add_backlink'
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -16,15 +16,20 @@ const Home = () => {
   const classes = useStyles()
 
   const [data, setData] = useState() 
-  
-  useEffect(() => {
+
+  const loadData = () => {
     //Change this later to some kind of configuration file
     axios.post('http://localhost:3050/api/backlink/fetch')
-      .then(response => {
-        setData(response.data)
-      })
-      .catch(err => console.error(err) )
-  }, [data])
+    .then(response => {
+      console.log('Data loaded')
+      setData(response.data)
+    })
+    .catch(err => console.error(err) )
+  }
+  
+  useEffect(() => {
+    loadData()
+  },[])
 
   return (
     <>
@@ -62,7 +67,7 @@ const Home = () => {
         </TableBody>
       </Table>
     </TableContainer>
-    <AddBacklinks tableState={data}/>
+    <AddBacklink loadData={loadData} tableState={data}/>
     </>
   )
 }

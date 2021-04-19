@@ -34,7 +34,7 @@ const initialFormState = {
   price: null
 }
 
-const AddBacklink = () => {
+const AddBacklink = ({loadData}) => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false)
@@ -54,6 +54,7 @@ const AddBacklink = () => {
     e.preventDefault()
     alert(`On ${formValues.dateOrdered} submitting Target URL: ${formValues.targetUrl} / Backlink URL ${formValues.backlinkUrl}`)
     setFormValues(initialFormState)
+    loadData()
     handleClose()
   }
 
