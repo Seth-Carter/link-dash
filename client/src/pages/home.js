@@ -21,7 +21,6 @@ const Home = () => {
     //Change this later to some kind of configuration file
     axios.post('http://localhost:3050/api/backlink/fetch')
     .then(response => {
-      console.log('Data loaded')
       setData(response.data)
     })
     .catch(err => console.error(err) )
@@ -42,6 +41,7 @@ const Home = () => {
             </TableCell>
             <TableCell>Target URL</TableCell>
             <TableCell>Backlink URL</TableCell>
+            <TableCell>Anchor</TableCell>
             <TableCell>Vendor</TableCell>
             <TableCell>Date Ordered</TableCell>
             <TableCell>Order Status</TableCell>
@@ -57,6 +57,7 @@ const Home = () => {
               </TableCell>
               <TableCell>{row.targetUrl}</TableCell>
               <TableCell>{row.backlinkUrl}</TableCell>
+              <TableCell>{row.anchor}</TableCell>
               <TableCell>{row.vendor}</TableCell>
               <TableCell>{dayjs(row.dateOrdered).format('MMMM D, YYYY')}</TableCell>
               <TableCell>{row.orderStatus}</TableCell>

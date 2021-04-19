@@ -1,5 +1,6 @@
 import React, { useState }from 'react'
 import DateFnsUtils from '@date-io/date-fns'
+import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { 
@@ -27,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
 const initialFormState = {
   targetUrl: '',
   backlinkUrl: '',
+  anchor: '',
   dateOrdered: new Date().toISOString(),
   vendor: '',
   orderStatus: '',
-  language: '',
-  price: null
+  contentLanguage: '',
+  price: null,
+  currency: ''
 }
-
 const AddBacklink = ({loadData}) => {
   const classes = useStyles()
 
@@ -52,10 +54,16 @@ const AddBacklink = ({loadData}) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    alert(`On ${formValues.dateOrdered} submitting Target URL: ${formValues.targetUrl} / Backlink URL ${formValues.backlinkUrl}`)
-    setFormValues(initialFormState)
-    loadData()
-    handleClose()
+    axios.post('http://localhost:3050/api/backlink/new', {
+      ...formValues,
+      price: parseFloat(formValues.price)
+      })
+      .then(res => {
+        loadData()
+        setFormValues(initialFormState)
+        handleClose()
+      })
+      .catch(err => console.error(err))
   }
 
   const handleInputChange = e => {
@@ -110,6 +118,16 @@ const AddBacklink = ({loadData}) => {
                 value={formValues.backlinkUrl}
                 onChange={handleInputChange}
               />
+            <div>
+              <TextField
+                margin="dense"
+                fullWidth
+                label="Anchor"
+                name="anchor"
+                value={formValues.anchor}
+                onChange={handleInputChange}
+                />
+            </div>
             </div>
             <Grid container justify="space-between">
               <Grid item xs>
@@ -159,8 +177,8 @@ const AddBacklink = ({loadData}) => {
                 margin="dense"
                 fullWidth
                 label="Language"
-                name="language"
-                value={formValues.language}
+                name="contentLanguage"
+                value={formValues.contentLanguage}
                 onChange={handleInputChange}
               />
             </div>
@@ -171,6 +189,16 @@ const AddBacklink = ({loadData}) => {
                 label="Price"
                 name="price"
                 value={formValues.price}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <TextField
+                margin="dense"
+                fullWidth
+                label="Currency"
+                name="currency"
+                value={formValues.currency}
                 onChange={handleInputChange}
               />
             </div>

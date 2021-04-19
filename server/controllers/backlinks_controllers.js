@@ -1,6 +1,7 @@
 const Backlink = require('../models/backlink')
 
 module.exports = {
+  
   createBacklink(req, res) {
     const backlink = new Backlink({
       vendor: req.body.vendor,
