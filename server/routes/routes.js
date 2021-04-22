@@ -13,4 +13,6 @@ module.exports = (app) => {
 
   //TODO: This route needs pagination 
   app.post('/api/backlink/fetch', BacklinksController.fetchBacklinks)
+
+  app.post('/api/backlink/delete', BacklinksController.deleteBacklinks)
 }

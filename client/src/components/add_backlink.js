@@ -18,6 +18,8 @@ import {
   Grid,
   Input
 } from '@material-ui/core'
+import { handleClickOpen } from '../utils/handlers/click_handlers'
+import { handleClose } from '../utils/handlers/click_handlers'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -33,24 +35,16 @@ const initialFormState = {
   vendor: '',
   orderStatus: '',
   contentLanguage: '',
-  price: null,
+  price: '',
   currency: ''
 }
 const AddBacklink = ({loadData}) => {
   const classes = useStyles()
 
-  const [open, setOpen] = useState(false)
+  const [openStatus, setOpenStatus] = useState(false)
   const [formValues, setFormValues] = useState(initialFormState)
 
    //TODO: Move backlink handlers to a dedicated file in the handlers folder
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -61,7 +55,7 @@ const AddBacklink = ({loadData}) => {
       .then(res => {
         loadData()
         setFormValues(initialFormState)
-        handleClose()
+        handleClose(setOpenStatus)
       })
       .catch(err => console.error(err))
   }
@@ -89,10 +83,10 @@ const AddBacklink = ({loadData}) => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" onClick={() => handleClickOpen(setOpenStatus)}>
         Add Backlink
       </Button>
-      <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+      <Dialog fullWidth maxWidth="sm" open={openStatus} onClose={() => handleClose(setOpenStatus)}>
         <DialogTitle>Add Backlink</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -205,7 +199,7 @@ const AddBacklink = ({loadData}) => {
             <DialogActions>
               <Button
                 color="primary"
-                onClick={handleClose}
+                onClick={() => handleClose(setOpenStatus)}
               >
                 Cancel
               </Button>

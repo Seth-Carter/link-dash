@@ -29,5 +29,15 @@ module.exports = {
         res.send(backlinks)
       })
       .catch((err) => res.status(422).send({ error: err.message}))
+  },
+  
+  deleteBacklinks(req, res) {
+    Backlink.deleteMany(
+      { 
+        _id: {
+          $in: req.body._idArray
+    }})
+    .then((data) => res.send(data))
+    .catch((err) => res.status(422).send({error: err.message}))
   }
 }
