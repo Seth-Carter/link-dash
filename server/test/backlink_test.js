@@ -3,8 +3,6 @@ const request = require('supertest')
 const Backlink = require('../models/backlink')
 const app = require('../app')
 
-// Need to refactor this test to use 'beforeEach' instead of chaining supertest requests
-
 describe('The backlink route', () => {
   const backlinkProps = {
     vendor: 'Linkstop',
@@ -29,7 +27,32 @@ describe('The backlink route', () => {
   })
 
   it('deletes a backlink', (done) => {
-    //TODO
-    done()
+    const backlink1 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink1.com' }) 
+    const backlink2 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink2.com' }) 
+    const backlink3 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink3.com' })
+
+    let idArray = {
+      _idArray: []
+    }
+
+    Promise.all([backlink1.save(), backlink2.save(), backlink3.save()])
+      .then((res) => {
+        
+        res.forEach((record) => {
+          idArray._idArray.push(record._id)
+        })
+        
+        request(app)
+          .post('/api/backlink/delete')
+          .send(idArray)
+          .end((err, res) => {
+            assert(res.body.ok === 1)
+            done()
+          })
+      })
+      .catch((err) => {
+        console.warn(err)
+        done()
+      })
   })
 })
