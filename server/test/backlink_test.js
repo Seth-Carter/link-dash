@@ -3,11 +3,13 @@ const request = require('supertest')
 const Backlink = require('../models/backlink')
 const app = require('../app')
 
+// Need to refactor this test to use 'beforeEach' instead of chaining supertest requests
+
 describe('The backlink route', () => {
   const backlinkProps = {
     vendor: 'Linkstop',
     orderStatus: 'pending',
-    dateOrdered: '2021-04-22T19:37:27+0000',
+    dateOrdered: new Date().toISOString(),
     contentLanguage: 'EN',
     anchor: 'this is an anchor',
     targetUrl: 'www.coolsite.com',
@@ -24,5 +26,10 @@ describe('The backlink route', () => {
         assert(res.body.vendor === 'Linkstop')
         done()
       })
+  })
+
+  it('deletes a backlink', (done) => {
+    //TODO
+    done()
   })
 })
