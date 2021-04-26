@@ -26,7 +26,7 @@ describe('The backlink route', () => {
       })
   })
 
-  it('deletes a backlink', (done) => {
+  it('deletes backlinks', (done) => {
     const backlink1 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink1.com' }) 
     const backlink2 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink2.com' }) 
     const backlink3 = new Backlink({ ...backlinkProps, targetUrl: 'www.backlink3.com' })
@@ -37,7 +37,6 @@ describe('The backlink route', () => {
 
     Promise.all([backlink1.save(), backlink2.save(), backlink3.save()])
       .then((res) => {
-        
         res.forEach((record) => {
           idArray._idArray.push(record._id)
         })

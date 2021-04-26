@@ -1,7 +1,7 @@
 export const handleClickOpen = (setOpen) => {
-  setOpen(true)
-}
+  setOpen(true);
+};
 
 export const handleClose = (setOpen) => {
-  setOpen(false)
-}
+  setOpen(false);
+};

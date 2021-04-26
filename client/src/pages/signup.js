@@ -1,29 +1,21 @@
-import { Grid, Typography, TextField } from '@material-ui/core'
+import { Grid, Typography, TextField } from "@material-ui/core";
 
 const Signup = () => {
   return (
-    <Grid container >
+    <Grid container>
       <Grid item sm />
       <Grid item sm>
-        <Typography component="h1" >
-          Sign Up
-        </Typography>
+        <Typography component="h1">Sign Up</Typography>
         <form noValidate>
-          <TextField 
-            fullWidth
-            id="name"
-            name="name"
-            type="name"
-            label="Name"
-          />
+          <TextField fullWidth id="name" name="name" type="name" label="Name" />
           <TextField
-            fullWidth 
+            fullWidth
             id="email"
             name="email"
             type="email"
             label="Email"
           />
-          <TextField 
+          <TextField
             fullWidth
             id="password"
             name="password"
@@ -34,7 +26,7 @@ const Signup = () => {
       </Grid>
       <Grid item sm />
     </Grid>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

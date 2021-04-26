@@ -1,44 +1,55 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { capitalize, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core'
-import axios from 'axios'
-import dayjs from 'dayjs'
-import currencyMap from '../utils/currency_map'
-import AddBacklink from '../components/add_backlink'
-import EditBacklink from '../components/edit_backlink'
-import DeleteBacklink from '../components/delete_backlink'
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  capitalize,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+} from "@material-ui/core";
+import axios from "axios";
+import dayjs from "dayjs";
+import currencyMap from "../utils/currency_map";
+import AddBacklink from "../components/add_backlink";
+import EditBacklink from "../components/edit_backlink";
+import DeleteBacklink from "../components/delete_backlink";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   table: {
-    marginBottom: '8px',
-    '& th, td': {
-      textAlign: 'center'
-    }
+    marginBottom: "8px",
+    "& th, td": {
+      textAlign: "center",
+    },
   },
   tableHead: {
-    '& th': {
-      fontSize: '1rem'
-    }
-  }
-}))  
+    "& th": {
+      fontSize: "1rem",
+    },
+  },
+}));
 
 const Home = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [data, setData] = useState() 
+  const [data, setData] = useState();
 
   const loadData = () => {
     //Change this later to some kind of configuration file
-    axios.post('http://localhost:3050/api/backlink/fetch')
-    .then(response => {
-      setData(response.data)
-    })
-    .catch(err => console.error(err) )
-  }
-  
+    axios
+      .post("http://localhost:3050/api/backlink/fetch")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
-    loadData()
-  },[])
+    loadData();
+  }, []);
 
   return (
     <>
@@ -47,7 +58,7 @@ const Home = () => {
           <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox/>
+                <Checkbox />
               </TableCell>
               <TableCell>Target URL</TableCell>
               <TableCell>Backlink URL</TableCell>
@@ -61,31 +72,37 @@ const Home = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((row) => (
-              <TableRow key={row._id} scope="row">
-                <TableCell padding="checkbox">
-                  <Checkbox/>
-                </TableCell>
-                <TableCell>{row.targetUrl}</TableCell>
-                <TableCell>{row.backlinkUrl}</TableCell>
-                <TableCell>{row.anchor}</TableCell>
-                <TableCell>{row.vendor}</TableCell>
-                <TableCell>{dayjs(row.dateOrdered).format('MMMM D, YYYY')}</TableCell>
-                <TableCell>{capitalize(row.orderStatus)}</TableCell>
-                <TableCell>{row.contentLanguage}</TableCell>
-                <TableCell>{currencyMap[row.currency]??currencyMap[row.currency]}{row.price.$numberDecimal}</TableCell>
-                <TableCell >
-                  <EditBacklink data={row} />
-                  <DeleteBacklink _id={row.id} />
-                </TableCell>
-              </TableRow>
-            ))}
+            {data &&
+              data.map((row) => (
+                <TableRow key={row._id} scope="row">
+                  <TableCell padding="checkbox">
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell>{row.targetUrl}</TableCell>
+                  <TableCell>{row.backlinkUrl}</TableCell>
+                  <TableCell>{row.anchor}</TableCell>
+                  <TableCell>{row.vendor}</TableCell>
+                  <TableCell>
+                    {dayjs(row.dateOrdered).format("MMMM D, YYYY")}
+                  </TableCell>
+                  <TableCell>{capitalize(row.orderStatus)}</TableCell>
+                  <TableCell>{row.contentLanguage}</TableCell>
+                  <TableCell>
+                    {currencyMap[row.currency] ?? currencyMap[row.currency]}
+                    {row.price.$numberDecimal}
+                  </TableCell>
+                  <TableCell>
+                    <EditBacklink loadData={loadData} data={row} />
+                    <DeleteBacklink loadData={loadData} _id={row._id} />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <AddBacklink loadData={loadData} tableState={data}/>
+      <AddBacklink loadData={loadData} tableState={data} />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -1,12 +1,12 @@
-import EditIcon from '@material-ui/icons/Edit'
-import IconButton from '@material-ui/core/IconButton'
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
 
 const EditBacklink = (props) => {
   return (
     <IconButton size="small" color="secondary">
-      <EditIcon/>
+      <EditIcon />
     </IconButton>
-  )
-}
+  );
+};
 
-export default EditBacklink
+export default EditBacklink;
