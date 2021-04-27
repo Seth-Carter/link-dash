@@ -45,12 +45,9 @@ const Home = () => {
   useEffect(() => {
     const triggerLoadData = () => {
       //Change this later to some kind of configuration file
-      console.log(`http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`);
       axios
         .post(`http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
         .then((response) => {
-          alert('Data refreshed!')
-          console.log(response.data)
           setData(response.data);
         })
         .catch((err) => console.error(err));
