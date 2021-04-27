@@ -24,9 +24,20 @@ module.exports = {
   },
 
   fetchBacklinks(req, res) {
+    const { page = 0, limit = 10 } = req.query
+    const payload = {}
+
     Backlink.find({})
+      .limit(limit * 1)
+      .skip(page * limit)
       .then((backlinks) => {
-        res.send(backlinks)
+        payload.backlinks = backlinks
+        return Backlink.countDocuments()
+      })
+      .then((count) => {
+        payload.totalDocuments = count,
+        payload.currentPage = parseInt(page, 10)
+        res.send(payload)
       })
       .catch((err) => res.status(422).send({ error: err.message}))
   },

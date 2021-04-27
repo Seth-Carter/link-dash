@@ -40,7 +40,7 @@ const initialFormState = {
   price: "",
   currency: "",
 };
-const AddBacklink = ({ loadData }) => {
+const AddBacklink = ({ setNewBacklink }) => {
   const classes = useStyles();
 
   const [openStatus, setOpenStatus] = useState(false);
@@ -54,7 +54,7 @@ const AddBacklink = ({ loadData }) => {
         price: parseFloat(formValues.price),
       })
       .then((res) => {
-        loadData();
+        setNewBacklink(res.data._id);
         setFormValues(initialFormState);
         handleClose(setOpenStatus);
       })

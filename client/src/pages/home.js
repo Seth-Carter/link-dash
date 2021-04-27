@@ -36,24 +36,36 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-
+  
+  const [backlink, setBacklink] = useState('')
   const [data, setData] = useState();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const loadData = () => {
-    //Change this later to some kind of configuration file
-    axios
-      .post("http://localhost:3050/api/backlink/fetch")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((err) => console.error(err));
-  };
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const triggerLoadData = () => {
+      //Change this later to some kind of configuration file
+      console.log(`http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`);
+      axios
+        .post(`http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
+        .then((response) => {
+          alert('Data refreshed!')
+          console.log(response.data)
+          setData(response.data);
+        })
+        .catch((err) => console.error(err));
+    };
+    triggerLoadData();
+  }, [page, rowsPerPage, backlink]);
+
+  const handleChangePage = (e, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (e) => {
+    setRowsPerPage(parseInt(e.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <>
@@ -77,7 +89,7 @@ const Home = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.map((row) => (
+              data.backlinks.map((row) => (
                 <TableRow key={row._id} scope="row">
                   <TableCell padding="checkbox">
                     <Checkbox />
@@ -96,8 +108,8 @@ const Home = () => {
                     {row.price.$numberDecimal}
                   </TableCell>
                   <TableCell>
-                    <EditBacklink loadData={loadData} data={row} />
-                    <DeleteBacklink loadData={loadData} _id={row._id} />
+                    <EditBacklink setBacklink={setBacklink} data={row} />
+                    <DeleteBacklink setBacklink={setBacklink} _id={row._id} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -105,14 +117,16 @@ const Home = () => {
           <TableFooter>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              count={data.length}
+              count={data && data.totalDocuments}
               rowsPerPage={rowsPerPage}
               page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </TableFooter>
         </Table>
       </TableContainer>
-      <AddBacklink loadData={loadData} tableState={data} />
+      <AddBacklink setBacklink={setBacklink} tableState={data} />
     </>
   );
 };
