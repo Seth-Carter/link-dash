@@ -10,6 +10,8 @@ import {
   TableRow,
   Paper,
   Checkbox,
+  TableFooter,
+  TablePagination
 } from "@material-ui/core";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -36,6 +38,8 @@ const Home = () => {
   const classes = useStyles();
 
   const [data, setData] = useState();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const loadData = () => {
     //Change this later to some kind of configuration file
@@ -98,6 +102,14 @@ const Home = () => {
                 </TableRow>
               ))}
           </TableBody>
+          <TableFooter>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+            />
+          </TableFooter>
         </Table>
       </TableContainer>
       <AddBacklink loadData={loadData} tableState={data} />

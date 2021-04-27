@@ -46,8 +46,6 @@ const AddBacklink = ({ loadData }) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [formValues, setFormValues] = useState(initialFormState);
 
-  //TODO: Move backlink handlers to a dedicated file in the handlers folder
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
