@@ -12,6 +12,7 @@ import {
   Checkbox,
   TableFooter,
   TablePagination,
+  LinearProgress,
 } from '@material-ui/core';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -37,6 +38,7 @@ const useStyles = makeStyles(() => ({
 const Home = () => {
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(false);
   const [backlink, setBacklink] = useState('');
   const [data, setData] = useState();
   const [page, setPage] = useState(0);
@@ -51,9 +53,11 @@ const Home = () => {
         )
         .then((response) => {
           setData(response.data);
+          setLoading(false);
         })
         .catch((err) => console.error(err));
     };
+    setLoading(true);
     triggerLoadData();
   }, [page, rowsPerPage, backlink]);
 
@@ -69,6 +73,7 @@ const Home = () => {
   return (
     <>
       <TableContainer className={classes.table} component={Paper}>
+        {loading && <LinearProgress />}
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
@@ -77,11 +82,9 @@ const Home = () => {
               </TableCell>
               <TableCell>Target URL</TableCell>
               <TableCell>Backlink URL</TableCell>
-              <TableCell>Anchor</TableCell>
               <TableCell>Vendor</TableCell>
               <TableCell>Date Ordered</TableCell>
               <TableCell>Order Status</TableCell>
-              <TableCell>Language</TableCell>
               <TableCell>Price</TableCell>
               <TableCell />
             </TableRow>
@@ -95,13 +98,11 @@ const Home = () => {
                   </TableCell>
                   <TableCell>{row.targetUrl}</TableCell>
                   <TableCell>{row.backlinkUrl}</TableCell>
-                  <TableCell>{row.anchor}</TableCell>
                   <TableCell>{row.vendor}</TableCell>
                   <TableCell>
                     {dayjs(row.dateOrdered).format('MMMM D, YYYY')}
                   </TableCell>
                   <TableCell>{capitalize(row.orderStatus)}</TableCell>
-                  <TableCell>{row.contentLanguage}</TableCell>
                   <TableCell>
                     {currencyMap[row.currency] ?? currencyMap[row.currency]}
                     {row.price.$numberDecimal}

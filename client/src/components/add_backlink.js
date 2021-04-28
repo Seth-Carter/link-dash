@@ -76,13 +76,6 @@ const AddBacklink = ({ setBacklink }) => {
     }));
   };
 
-  const handleStatusChange = (e) => {
-    setFormValues(() => ({
-      ...formValues,
-      orderStatus: e.target.value,
-    }));
-  };
-
   return (
     <>
       <Button
@@ -154,8 +147,9 @@ const AddBacklink = ({ setBacklink }) => {
                 <FormControl className={classes.formControl} margin="dense">
                   <InputLabel>Order Status</InputLabel>
                   <Select
+                    name="orderStatus"
                     value={formValues.orderStatus}
-                    onChange={handleStatusChange}
+                    onChange={handleInputChange}
                     input={<Input />}
                   >
                     {/* Need to figure out what options should be included here */}
@@ -187,26 +181,33 @@ const AddBacklink = ({ setBacklink }) => {
                 onChange={handleInputChange}
               />
             </div>
-            <div>
-              <TextField
-                margin="dense"
-                fullWidth
-                label="Price"
-                name="price"
-                value={formValues.price}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <TextField
-                margin="dense"
-                fullWidth
-                label="Currency"
-                name="currency"
-                value={formValues.currency}
-                onChange={handleInputChange}
-              />
-            </div>
+            <Grid container justify="space-between">
+              <Grid item xs>
+                <TextField
+                  margin="dense"
+                  fullWidth
+                  label="Price"
+                  name="price"
+                  value={formValues.price}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs>
+                <FormControl className={classes.formControl} margin="dense">
+                  <InputLabel>Currency</InputLabel>
+                  <Select
+                    name="currency"
+                    value={formValues.currency}
+                    onChange={handleInputChange}
+                    input={<Input />}
+                  >
+                    <MenuItem value="GBP">GBP (£)</MenuItem>
+                    <MenuItem value="USD">USD ($)</MenuItem>
+                    <MenuItem value="EUR">EURO (€)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
             <DialogActions>
               <Button
                 color="primary"
