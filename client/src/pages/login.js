@@ -1,3 +1,1 @@
-const Login = () => {
-  return <h1>Hello World!</h1>;
-};
+const Login = () => <h1>Hello World!</h1>;

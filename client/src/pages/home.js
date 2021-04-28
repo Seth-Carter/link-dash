@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   capitalize,
   Table,
@@ -11,42 +11,44 @@ import {
   Paper,
   Checkbox,
   TableFooter,
-  TablePagination
-} from "@material-ui/core";
-import axios from "axios";
-import dayjs from "dayjs";
-import currencyMap from "../utils/currency_map";
-import AddBacklink from "../components/add_backlink";
-import EditBacklink from "../components/edit_backlink";
-import DeleteBacklink from "../components/delete_backlink";
+  TablePagination,
+} from '@material-ui/core';
+import axios from 'axios';
+import dayjs from 'dayjs';
+import currencyMap from '../utils/currency_map';
+import AddBacklink from '../components/add_backlink';
+import EditBacklink from '../components/edit_backlink';
+import DeleteBacklink from '../components/delete_backlink';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   table: {
-    marginBottom: "8px",
-    "& th, td": {
-      textAlign: "center",
+    marginBottom: '8px',
+    '& th, td': {
+      textAlign: 'center',
     },
   },
   tableHead: {
-    "& th": {
-      fontSize: "1rem",
+    '& th': {
+      fontSize: '1rem',
     },
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  
-  const [backlink, setBacklink] = useState('')
+
+  const [backlink, setBacklink] = useState('');
   const [data, setData] = useState();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const triggerLoadData = () => {
-      //Change this later to some kind of configuration file
+      // Change this later to some kind of configuration file
       axios
-        .post(`http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
+        .post(
+          `http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`
+        )
         .then((response) => {
           setData(response.data);
         })
@@ -81,7 +83,7 @@ const Home = () => {
               <TableCell>Order Status</TableCell>
               <TableCell>Language</TableCell>
               <TableCell>Price</TableCell>
-              <TableCell></TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,7 +98,7 @@ const Home = () => {
                   <TableCell>{row.anchor}</TableCell>
                   <TableCell>{row.vendor}</TableCell>
                   <TableCell>
-                    {dayjs(row.dateOrdered).format("MMMM D, YYYY")}
+                    {dayjs(row.dateOrdered).format('MMMM D, YYYY')}
                   </TableCell>
                   <TableCell>{capitalize(row.orderStatus)}</TableCell>
                   <TableCell>{row.contentLanguage}</TableCell>

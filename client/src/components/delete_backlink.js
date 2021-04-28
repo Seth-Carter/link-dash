@@ -1,6 +1,7 @@
-import { useState } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import {
   Dialog,
   DialogActions,
@@ -8,25 +9,23 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-} from "@material-ui/core";
-import { handleClickOpen, handleClose } from "../utils/handlers/click_handlers";
-import axios from "axios";
+} from '@material-ui/core';
+import axios from 'axios';
+import { handleClickOpen, handleClose } from '../utils/handlers/click_handlers';
 
-const DeleteBacklink = ({ _id, loadData }) => {
+const DeleteBacklink = ({ _id, setBacklink }) => {
   const [openStatus, setOpenStatus] = useState(false);
 
   const handleDelete = (id) => {
     axios
-      .post("http://localhost:3050/api/backlink/delete", {
+      .post('http://localhost:3050/api/backlink/delete', {
         _idArray: [id],
       })
       .then((res) => {
-        console.log(id);
-        console.log(res);
-        loadData();
+        setBacklink(res.data);
         handleClose(setOpenStatus);
       })
-      .catch((err) => console.warn(err));
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -57,6 +56,11 @@ const DeleteBacklink = ({ _id, loadData }) => {
       </Dialog>
     </>
   );
+};
+
+DeleteBacklink.propTypes = {
+  _id: PropTypes.string.isRequired,
+  setBacklink: PropTypes.func.isRequired,
 };
 
 export default DeleteBacklink;

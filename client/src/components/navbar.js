@@ -1,17 +1,18 @@
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
   IconButton,
   Typography,
   Button,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "8px",
+    marginBottom: '8px',
   },
   menuButton: {
     marginRight: theme.spacing(2),

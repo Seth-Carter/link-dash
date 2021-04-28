@@ -1,7 +1,7 @@
 const currencyMap = {
-  USD: "$",
-  GBP: "£",
-  EUR: "€",
+  USD: '$',
+  GBP: '£',
+  EUR: '€',
 };
 
 export default currencyMap;

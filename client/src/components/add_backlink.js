@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import DateFnsUtils from "@date-io/date-fns";
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+} from '@material-ui/pickers';
 import {
   Button,
   TextField,
@@ -20,27 +21,27 @@ import {
   MenuItem,
   Grid,
   Input,
-} from "@material-ui/core";
-import { handleClickOpen, handleClose } from "../utils/handlers/click_handlers";
+} from '@material-ui/core';
+import { handleClickOpen, handleClose } from '../utils/handlers/click_handlers';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formControl: {
-    minWidth: "100%",
+    minWidth: '100%',
   },
 }));
 
 const initialFormState = {
-  targetUrl: "",
-  backlinkUrl: "",
-  anchor: "",
+  targetUrl: '',
+  backlinkUrl: '',
+  anchor: '',
   dateOrdered: new Date().toISOString(),
-  vendor: "",
-  orderStatus: "",
-  contentLanguage: "",
-  price: "",
-  currency: "",
+  vendor: '',
+  orderStatus: '',
+  contentLanguage: '',
+  price: '',
+  currency: '',
 };
-const AddBacklink = ({ setNewBacklink }) => {
+const AddBacklink = ({ setBacklink }) => {
   const classes = useStyles();
 
   const [openStatus, setOpenStatus] = useState(false);
@@ -49,12 +50,12 @@ const AddBacklink = ({ setNewBacklink }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3050/api/backlink/new", {
+      .post('http://localhost:3050/api/backlink/new', {
         ...formValues,
         price: parseFloat(formValues.price),
       })
       .then((res) => {
-        setNewBacklink(res.data._id);
+        setBacklink(res.data._id);
         setFormValues(initialFormState);
         handleClose(setOpenStatus);
       })
@@ -62,21 +63,21 @@ const AddBacklink = ({ setNewBacklink }) => {
   };
 
   const handleInputChange = (e) => {
-    setFormValues((formValues) => ({
+    setFormValues(() => ({
       ...formValues,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleDateChange = (e) => {
-    setFormValues((formValues) => ({
+    setFormValues(() => ({
       ...formValues,
       dateOrdered: e.toISOString(),
     }));
   };
 
   const handleStatusChange = (e) => {
-    setFormValues((formValues) => ({
+    setFormValues(() => ({
       ...formValues,
       orderStatus: e.target.value,
     }));
@@ -222,6 +223,10 @@ const AddBacklink = ({ setNewBacklink }) => {
       </Dialog>
     </>
   );
+};
+
+AddBacklink.propTypes = {
+  setBacklink: PropTypes.func.isRequired,
 };
 
 export default AddBacklink;
