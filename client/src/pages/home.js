@@ -10,7 +10,6 @@ import {
   TableRow,
   Paper,
   Checkbox,
-  TableFooter,
   TablePagination,
   LinearProgress,
 } from '@material-ui/core';
@@ -46,7 +45,7 @@ const Home = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    const triggerLoadData = () => {
+    const loadData = () => {
       // Change this later to some kind of configuration file
       axios
         .post(`/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
@@ -57,7 +56,7 @@ const Home = () => {
         .catch((err) => console.error(err));
     };
     setLoading(true);
-    triggerLoadData();
+    loadData();
   }, [page, rowsPerPage, backlink]);
 
   const handleChangePage = (e, newPage) => {
@@ -69,6 +68,36 @@ const Home = () => {
     setPage(0);
   };
 
+  const handleSelectAllClick = (e) => {
+    if (e.target.checked) {
+      const newSelecteds = data.backlinks.map((row) => row._id);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleSelectClick = (e, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const isSelected = (id) => selected.indexOf(id) > -1;
+
   return (
     <>
       <TableContainer className={classes.table} component={Paper}>
@@ -77,7 +106,15 @@ const Home = () => {
           <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox />
+                <Checkbox
+                  checked={
+                    (data &&
+                      data.backlinks.length > 0 &&
+                      selected.length === data.backlinks.length) ||
+                    false
+                  }
+                  onChange={handleSelectAllClick}
+                />
               </TableCell>
               <TableCell>Target URL</TableCell>
               <TableCell>Backlink URL</TableCell>
@@ -90,39 +127,45 @@ const Home = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.backlinks.map((row) => (
-                <TableRow key={row._id} scope="row">
-                  <TableCell padding="checkbox">
-                    <Checkbox checked={false} />
-                  </TableCell>
-                  <TableCell>{row.targetUrl}</TableCell>
-                  <TableCell>{row.backlinkUrl}</TableCell>
-                  <TableCell>{row.vendor}</TableCell>
-                  <TableCell>
-                    {dayjs(row.dateOrdered).format('MMMM D, YYYY')}
-                  </TableCell>
-                  <TableCell>{capitalize(row.orderStatus)}</TableCell>
-                  <TableCell>
-                    {currencyMap[row.currency] ?? currencyMap[row.currency]}
-                    {row.price.$numberDecimal}
-                  </TableCell>
-                  <TableCell>
-                    <EditBacklink setBacklink={setBacklink} data={row} />
-                    <DeleteBacklink setBacklink={setBacklink} _id={row._id} />
-                  </TableCell>
-                </TableRow>
-              ))}
+              data.backlinks.map((row) => {
+                const isItemSelected = isSelected(row._id);
+                return (
+                  <TableRow key={row._id} scope="row">
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        onChange={(e) => handleSelectClick(e, row._id)}
+                      />
+                    </TableCell>
+                    <TableCell>{row.targetUrl}</TableCell>
+                    <TableCell>{row.backlinkUrl}</TableCell>
+                    <TableCell>{row.vendor}</TableCell>
+                    <TableCell>
+                      {dayjs(row.dateOrdered).format('MMMM D, YYYY')}
+                    </TableCell>
+                    <TableCell>{capitalize(row.orderStatus)}</TableCell>
+                    <TableCell>
+                      {currencyMap[row.currency] ?? currencyMap[row.currency]}
+                      {row.price.$numberDecimal}
+                    </TableCell>
+                    <TableCell>
+                      <EditBacklink setBacklink={setBacklink} data={row} />
+                      <DeleteBacklink setBacklink={setBacklink} _id={row._id} />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                count={(data && data.totalDocuments) || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableBody>
-          <TableFooter>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              count={data && data.totalDocuments}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          </TableFooter>
         </Table>
       </TableContainer>
       <AddBacklink setBacklink={setBacklink} tableState={data} />
