@@ -18,7 +18,7 @@ const DeleteBacklink = ({ _id, setBacklink }) => {
 
   const handleDelete = (id) => {
     axios
-      .post('http://localhost:3050/api/backlink/delete', {
+      .post('/api/backlink/delete', {
         _idArray: [id],
       })
       .then((res) => {

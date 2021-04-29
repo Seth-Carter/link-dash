@@ -41,6 +41,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [backlink, setBacklink] = useState('');
   const [data, setData] = useState();
+  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -48,9 +49,7 @@ const Home = () => {
     const triggerLoadData = () => {
       // Change this later to some kind of configuration file
       axios
-        .post(
-          `http://localhost:3050/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`
-        )
+        .post(`/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -94,7 +93,7 @@ const Home = () => {
               data.backlinks.map((row) => (
                 <TableRow key={row._id} scope="row">
                   <TableCell padding="checkbox">
-                    <Checkbox />
+                    <Checkbox checked={false} />
                   </TableCell>
                   <TableCell>{row.targetUrl}</TableCell>
                   <TableCell>{row.backlinkUrl}</TableCell>

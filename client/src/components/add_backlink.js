@@ -50,7 +50,7 @@ const AddBacklink = ({ setBacklink }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3050/api/backlink/new', {
+      .post('/api/backlink/new', {
         ...formValues,
         price: parseFloat(formValues.price),
       })
