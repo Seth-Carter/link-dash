@@ -215,7 +215,7 @@ const AddBacklink = ({ setBacklink }) => {
               >
                 Cancel
               </Button>
-              <Button color="primary" type="submit">
+              <Button variant="contained" color="primary" type="submit">
                 Submit
               </Button>
             </DialogActions>

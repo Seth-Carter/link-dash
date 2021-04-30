@@ -19,6 +19,7 @@ import currencyMap from '../utils/currency_map';
 import AddBacklink from '../components/add_backlink';
 import EditBacklink from '../components/edit_backlink';
 import DeleteBacklink from '../components/delete_backlink';
+import BulkActions from '../components/bulk_actions';
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -31,6 +32,9 @@ const useStyles = makeStyles(() => ({
     '& th': {
       fontSize: '1rem',
     },
+  },
+  tableHeadCheckbox: {
+    whiteSpace: 'nowrap',
   },
 }));
 
@@ -105,16 +109,16 @@ const Home = () => {
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell padding="checkbox">
+              <TableCell className={classes.tableHeadCheckbox} padding="radio">
                 <Checkbox
+                  color="default"
                   checked={
-                    (data &&
-                      data.backlinks.length > 0 &&
-                      selected.length === data.backlinks.length) ||
-                    false
+                    data?.backlinks.length > 0 &&
+                    selected.length === data.backlinks.length
                   }
                   onChange={handleSelectAllClick}
                 />
+                <BulkActions />
               </TableCell>
               <TableCell>Target URL</TableCell>
               <TableCell>Backlink URL</TableCell>
@@ -133,6 +137,7 @@ const Home = () => {
                   <TableRow key={row._id} scope="row">
                     <TableCell padding="checkbox">
                       <Checkbox
+                        color="default"
                         checked={isItemSelected}
                         onChange={(e) => handleSelectClick(e, row._id)}
                       />
@@ -145,7 +150,7 @@ const Home = () => {
                     </TableCell>
                     <TableCell>{capitalize(row.orderStatus)}</TableCell>
                     <TableCell>
-                      {currencyMap[row.currency] ?? currencyMap[row.currency]}
+                      {currencyMap[row.currency]}
                       {row.price.$numberDecimal}
                     </TableCell>
                     <TableCell>
@@ -158,7 +163,7 @@ const Home = () => {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                count={(data && data.totalDocuments) || 0}
+                count={data?.totalDocuments || 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
