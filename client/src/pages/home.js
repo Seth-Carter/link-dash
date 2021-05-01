@@ -109,7 +109,10 @@ const Home = () => {
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell className={classes.tableHeadCheckbox} padding="radio">
+              <TableCell
+                className={classes.tableHeadCheckbox}
+                padding="checkbox"
+              >
                 <Checkbox
                   color="default"
                   checked={
@@ -118,7 +121,11 @@ const Home = () => {
                   }
                   onChange={handleSelectAllClick}
                 />
-                <BulkActions />
+                <BulkActions
+                  selected={selected}
+                  setSelected={setSelected}
+                  setBacklink={setBacklink}
+                />
               </TableCell>
               <TableCell>Target URL</TableCell>
               <TableCell>Backlink URL</TableCell>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const BulkActions = () => {
+const BulkActions = ({ selected, setSelected, setBacklink }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (e) => {
@@ -11,6 +13,20 @@ const BulkActions = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = (e, inputArray) => {
+    e.preventDefault();
+    axios
+      .post('/api/backlink/delete', {
+        _idArray: inputArray,
+      })
+      .then((res) => {
+        setBacklink(res.data);
+        setSelected([]);
+        handleClose();
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -24,7 +40,7 @@ const BulkActions = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Delete All</MenuItem>
+        <MenuItem onClick={(e) => handleDelete(e, selected)}>Delete</MenuItem>
         <MenuItem onClick={handleClose}>Set Started</MenuItem>
         <MenuItem onClick={handleClose}>Set Pending</MenuItem>
         <MenuItem onClick={handleClose}>Set Reviewing</MenuItem>
@@ -32,6 +48,12 @@ const BulkActions = () => {
       </Menu>
     </>
   );
+};
+
+BulkActions.propTypes = {
+  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setSelected: PropTypes.func.isRequired,
+  setBacklink: PropTypes.func.isRequired,
 };
 
 export default BulkActions;
