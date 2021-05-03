@@ -1,7 +1,6 @@
-const Backlink = require('../models/backlink')
+const Backlink = require("../models/backlink");
 
 module.exports = {
-  
   createBacklink(req, res) {
     const backlink = new Backlink({
       vendor: req.body.vendor,
@@ -12,43 +11,55 @@ module.exports = {
       targetUrl: req.body.targetUrl,
       backlinkUrl: req.body.backlinkUrl,
       price: req.body.price,
-      currency: req.body.currency
-    })
-    backlink.save()
-    .then(newBacklink => res.send(newBacklink))
-    .catch((err) => res.status(422).send({ error: err.message }))
+      currency: req.body.currency,
+    });
+    backlink
+      .save()
+      .then((newBacklink) => res.send(newBacklink))
+      .catch((err) => res.status(422).send({ error: err.message }));
   },
 
   editBacklink(req, res) {
-    //TODO
+    Backlink.updateMany(
+      {
+        _id: {
+          $in: req.body._idArray,
+        },
+      },
+      {
+        $set: { orderStatus: req.body.setStatus },
+      }
+    )
+      .then((result) => res.send(result))
+      .catch((err) => res.status(422).send({ error: err.message }));
   },
 
   fetchBacklinks(req, res) {
-    const { page = 0, limit = 10 } = req.query
-    const payload = {}
+    const { page = 0, limit = 10 } = req.query;
+    const payload = {};
 
     Backlink.find({})
       .limit(limit * 1)
       .skip(page * limit)
       .then((backlinks) => {
-        payload.backlinks = backlinks
-        return Backlink.countDocuments()
+        payload.backlinks = backlinks;
+        return Backlink.countDocuments();
       })
       .then((count) => {
-        payload.totalDocuments = count,
-        payload.currentPage = parseInt(page, 10)
-        res.send(payload)
+        (payload.totalDocuments = count),
+          (payload.currentPage = parseInt(page, 10));
+        res.send(payload);
       })
-      .catch((err) => res.status(422).send({ error: err.message}))
+      .catch((err) => res.status(422).send({ error: err.message }));
   },
-  
+
   deleteBacklinks(req, res) {
-    Backlink.deleteMany(
-      { 
-        _id: {
-          $in: req.body._idArray
-    }})
-    .then((data) => res.send(data))
-    .catch((err) => res.status(422).send({error: err.message}))
-  }
-}
+    Backlink.deleteMany({
+      _id: {
+        $in: req.body._idArray,
+      },
+    })
+      .then((result) => res.send(result))
+      .catch((err) => res.status(422).send({ error: err.message }));
+  },
+};
