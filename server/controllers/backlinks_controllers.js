@@ -19,7 +19,7 @@ module.exports = {
       .catch((err) => res.status(422).send({ error: err.message }));
   },
 
-  editBacklink(req, res) {
+  editBacklinks(req, res) {
     Backlink.updateMany(
       {
         _id: {
@@ -27,7 +27,7 @@ module.exports = {
         },
       },
       {
-        $set: { orderStatus: req.body.setStatus },
+        $set: req.body.editProps,
       }
     )
       .then((result) => res.send(result))

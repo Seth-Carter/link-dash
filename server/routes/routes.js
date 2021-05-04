@@ -13,5 +13,5 @@ module.exports = (app) => {
 
   app.post("/api/backlink/delete", BacklinksController.deleteBacklinks);
 
-  app.post("/api/backlink/edit", BacklinksController.editBacklink);
+  app.post("/api/backlink/edit", BacklinksController.editBacklinks);
 };
