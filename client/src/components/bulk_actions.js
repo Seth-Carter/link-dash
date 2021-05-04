@@ -29,6 +29,21 @@ const BulkActions = ({ selected, setSelected, setBacklink }) => {
       .catch((err) => console.error(err));
   };
 
+  const handleEdit = (e, inputArray) => {
+    e.preventDefault();
+    axios
+      .post('/api/backlink/edit', {
+        _idArray: inputArray,
+        editProps: { orderStatus: e.target.dataset.action },
+      })
+      .then((res) => {
+        setBacklink(res.data);
+        setSelected([]);
+        handleClose();
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <>
       <IconButton size="small" onClick={handleClick}>
@@ -41,10 +56,30 @@ const BulkActions = ({ selected, setSelected, setBacklink }) => {
         onClose={handleClose}
       >
         <MenuItem onClick={(e) => handleDelete(e, selected)}>Delete</MenuItem>
-        <MenuItem onClick={handleClose}>Set Started</MenuItem>
-        <MenuItem onClick={handleClose}>Set Pending</MenuItem>
-        <MenuItem onClick={handleClose}>Set Reviewing</MenuItem>
-        <MenuItem onClick={handleClose}>Set Complete</MenuItem>
+        <MenuItem
+          data-action="started"
+          onClick={(e) => handleEdit(e, selected)}
+        >
+          Set Started
+        </MenuItem>
+        <MenuItem
+          data-action="pending"
+          onClick={(e) => handleEdit(e, selected)}
+        >
+          Set Pending
+        </MenuItem>
+        <MenuItem
+          data-action="reviewing"
+          onClick={(e) => handleEdit(e, selected)}
+        >
+          Set Reviewing
+        </MenuItem>
+        <MenuItem
+          data-action="complete"
+          onClick={(e) => handleEdit(e, selected)}
+        >
+          Set Complete
+        </MenuItem>
       </Menu>
     </>
   );
