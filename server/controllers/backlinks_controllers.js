@@ -36,9 +36,11 @@ module.exports = {
 
   fetchBacklinks(req, res) {
     const { page = 0, limit = 10 } = req.query;
+    const { filters } = req.body || {};
     const payload = {};
 
-    Backlink.find({})
+    Backlink.find(filters)
+      .sort({ dateOrdered: -1 })
       .limit(limit * 1)
       .skip(page * limit)
       .then((backlinks) => {

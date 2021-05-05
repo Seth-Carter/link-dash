@@ -20,6 +20,7 @@ import AddBacklink from '../components/add_backlink';
 import EditBacklink from '../components/edit_backlink';
 import DeleteBacklink from '../components/delete_backlink';
 import BulkActions from '../components/bulk_actions';
+import FilterBacklinks from '../components/filter_backlinks';
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -133,7 +134,9 @@ const Home = () => {
               <TableCell>Date Ordered</TableCell>
               <TableCell>Order Status</TableCell>
               <TableCell>Price</TableCell>
-              <TableCell />
+              <TableCell>
+                <FilterBacklinks />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

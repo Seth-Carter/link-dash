@@ -127,7 +127,7 @@ const AddBacklink = ({ setBacklink }) => {
                 />
               </div>
             </div>
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" spacing={1}>
               <Grid item xs>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
@@ -181,7 +181,7 @@ const AddBacklink = ({ setBacklink }) => {
                 onChange={handleInputChange}
               />
             </div>
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" spacing={1}>
               <Grid item xs>
                 <TextField
                   margin="dense"
