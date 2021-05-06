@@ -14,7 +14,6 @@ import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import DateFnsUtils from '@date-io/date-fns';
-import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   filterBackground: {
@@ -52,6 +51,7 @@ const FilterBacklinks = ({ setBacklink, filterValues, setFilterValues }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setBacklink(`${filterValues.startDate}|${filterValues.endDate}`);
+    setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
@@ -114,10 +114,19 @@ const FilterBacklinks = ({ setBacklink, filterValues, setFilterValues }) => {
                       </Grid>
                     </Grid>
                     <DialogActions>
-                      <Button color="primary" onClick={() => setAnchorEl(null)}>
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => setAnchorEl(null)}
+                      >
                         Cancel
                       </Button>
-                      <Button variant="contained" color="primary" type="submit">
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                      >
                         Submit
                       </Button>
                     </DialogActions>

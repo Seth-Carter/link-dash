@@ -37,6 +37,9 @@ const useStyles = makeStyles(() => ({
   tableHeadCheckbox: {
     whiteSpace: 'nowrap',
   },
+  spacer: {
+    height: '4px',
+  },
 }));
 
 const initialFilterValuesState = {
@@ -60,7 +63,7 @@ const Home = () => {
       const filterObject = {
         filters: { dateOrdered: { ...filterValues } },
       };
-      console.log(filterObject);
+
       axios
         .post(
           `/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`,
@@ -118,7 +121,7 @@ const Home = () => {
   return (
     <>
       <TableContainer className={classes.table} component={Paper}>
-        {loading && <LinearProgress />}
+        {loading ? <LinearProgress /> : <div className={classes.spacer} />}
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
