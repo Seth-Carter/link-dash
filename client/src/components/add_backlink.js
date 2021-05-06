@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import {
   Button,
   TextField,
@@ -130,7 +127,7 @@ const AddBacklink = ({ setBacklink }) => {
             <Grid container justify="space-between" spacing={1}>
               <Grid item xs>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
+                  <DatePicker
                     disableToolbar
                     variant="inline"
                     format="dd/MM/yyyy"

@@ -36,16 +36,48 @@ module.exports = {
 
   fetchBacklinks(req, res) {
     const { page = 0, limit = 10 } = req.query;
-    const { filters } = req.body || {};
+    const { filters } = req.body || {
+      dateOrdered: { startDate: null, endDate: null },
+    };
     const payload = {};
 
-    Backlink.find(filters)
+    console.log(req.body);
+    console.log(filters);
+
+    const filterProcessor = (filterInput) => {
+      const { startDate, endDate } = filterInput.dateOrdered;
+
+      if (startDate && endDate !== null) {
+        return {
+          dateOrdered: {
+            $gte: new Date(startDate.substr(0, 10)),
+            $lte: new Date(endDate.substr(0, 10)),
+          },
+        };
+      } else if (startDate !== null && endDate === null) {
+        return {
+          dateOrdered: {
+            $gte: new Date(startDate.substr(0, 10)),
+          },
+        };
+      } else if (startDate === null && endDate !== null) {
+        return {
+          dateOrdered: {
+            $lte: new Date(endDate.substr(0, 10)),
+          },
+        };
+      } else return {};
+    };
+
+    console.log("This should be the final object:", filterProcessor(filters));
+
+    Backlink.find(filterProcessor(filters))
       .sort({ dateOrdered: -1 })
       .limit(limit * 1)
       .skip(page * limit)
       .then((backlinks) => {
         payload.backlinks = backlinks;
-        return Backlink.countDocuments();
+        return Backlink.countDocuments(filterProcessor(filters));
       })
       .then((count) => {
         (payload.totalDocuments = count),

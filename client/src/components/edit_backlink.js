@@ -3,7 +3,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
 const EditBacklink = () => (
-  <IconButton size="small" color="secondary">
+  <IconButton size="small">
     <EditIcon />
   </IconButton>
 );

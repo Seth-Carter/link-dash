@@ -30,11 +30,7 @@ const DeleteBacklink = ({ _id, setBacklink }) => {
 
   return (
     <>
-      <IconButton
-        size="small"
-        color="secondary"
-        onClick={() => handleClickOpen(setOpenStatus)}
-      >
+      <IconButton size="small" onClick={() => handleClickOpen(setOpenStatus)}>
         <DeleteIcon />
       </IconButton>
       <Dialog open={openStatus} onClose={() => handleClose(setOpenStatus)}>

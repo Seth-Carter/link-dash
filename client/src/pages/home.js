@@ -39,21 +39,33 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const initialFilterValuesState = {
+  startDate: null,
+  endDate: null,
+};
+
 const Home = () => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
   const [backlink, setBacklink] = useState('');
   const [data, setData] = useState();
+  const [filterValues, setFilterValues] = useState(initialFilterValuesState);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const loadData = () => {
-      // Change this later to some kind of configuration file
+      const filterObject = {
+        filters: { dateOrdered: { ...filterValues } },
+      };
+      console.log(filterObject);
       axios
-        .post(`/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`)
+        .post(
+          `/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`,
+          filterObject
+        )
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -135,7 +147,11 @@ const Home = () => {
               <TableCell>Order Status</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>
-                <FilterBacklinks />
+                <FilterBacklinks
+                  setBacklink={setBacklink}
+                  filterValues={filterValues}
+                  setFilterValues={setFilterValues}
+                />
               </TableCell>
             </TableRow>
           </TableHead>
