@@ -64,29 +64,35 @@ const FilterBacklinks = () => {
             onExited={TransitionProps.onExited}
             timeout={350}
           >
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <Paper className={classes.filterBackground} elevation={8}>
-                <form>
-                  <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                      <Autocomplete
-                        options={autocompleteOptions}
-                        getOptionLabel={(option) => option.title}
-                        renderInput={(params) => (
-                          <TextField {...params} margin="dense" />
-                        )}
-                      />
+            <>
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <Paper className={classes.filterBackground} elevation={8}>
+                  <form>
+                    <Grid container spacing={1}>
+                      <Grid item xs={4}>
+                        <Autocomplete
+                          options={autocompleteOptions}
+                          getOptionLabel={(option) => option.title}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              margin="dense"
+                              label="Column"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField label="Test" margin="dense" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField label="Test" margin="dense" />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                      <TextField label="Test" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <TextField label="Test" />
-                    </Grid>
-                  </Grid>
-                </form>
-              </Paper>
-            </ClickAwayListener>
+                  </form>
+                </Paper>
+              </ClickAwayListener>
+            </>
           </Grow>
         )}
       </Popper>
