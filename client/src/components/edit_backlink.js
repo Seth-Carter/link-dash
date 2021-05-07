@@ -8,7 +8,7 @@ import {
   handleInputChange,
   handleDateChange,
 } from '../utils/handlers/click_handlers';
-import BacklinkForm from './backlink-form';
+import BacklinkForm from './backlink_form';
 
 const EditBacklink = ({ data, setBacklink }) => {
   const dataHandler = (rowData) => ({
@@ -50,7 +50,6 @@ const EditBacklink = ({ data, setBacklink }) => {
         <EditIcon />
       </IconButton>
       <BacklinkForm
-        _id={data._id}
         formTitle="Edit Backlink"
         formDescription="Fill out the following fields to edit an existing backlink."
         formValues={formValues}
