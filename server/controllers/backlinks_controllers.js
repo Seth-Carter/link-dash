@@ -41,9 +41,6 @@ module.exports = {
     };
     const payload = {};
 
-    console.log(req.body);
-    console.log(filters);
-
     const filterProcessor = (filterInput) => {
       const { startDate, endDate } = filterInput.dateOrdered;
 
@@ -68,8 +65,6 @@ module.exports = {
         };
       } else return {};
     };
-
-    console.log("This should be the final object:", filterProcessor(filters));
 
     Backlink.find(filterProcessor(filters))
       .sort({ dateOrdered: -1 })

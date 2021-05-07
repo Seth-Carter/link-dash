@@ -19,7 +19,12 @@ import {
   Grid,
   Input,
 } from '@material-ui/core';
-import { handleClickOpen, handleClose } from '../utils/handlers/click_handlers';
+import {
+  handleClickOpen,
+  handleClose,
+  handleInputChange,
+  handleDateChange,
+} from '../utils/handlers/click_handlers';
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -59,20 +64,6 @@ const AddBacklink = ({ setBacklink }) => {
       .catch((err) => console.error(err));
   };
 
-  const handleInputChange = (e) => {
-    setFormValues(() => ({
-      ...formValues,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleDateChange = (e) => {
-    setFormValues(() => ({
-      ...formValues,
-      dateOrdered: e.toISOString(),
-    }));
-  };
-
   return (
     <>
       <Button
@@ -101,7 +92,9 @@ const AddBacklink = ({ setBacklink }) => {
                 label="Target URL"
                 name="targetUrl"
                 value={formValues.targetUrl}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange(e, formValues, setFormValues)
+                }
               />
             </div>
             <div>
@@ -111,7 +104,9 @@ const AddBacklink = ({ setBacklink }) => {
                 label="Backlink URL"
                 name="backlinkUrl"
                 value={formValues.backlinkUrl}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange(e, formValues, setFormValues)
+                }
               />
               <div>
                 <TextField
@@ -120,7 +115,9 @@ const AddBacklink = ({ setBacklink }) => {
                   label="Anchor"
                   name="anchor"
                   value={formValues.anchor}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    handleInputChange(e, formValues, setFormValues)
+                  }
                 />
               </div>
             </div>
@@ -136,7 +133,9 @@ const AddBacklink = ({ setBacklink }) => {
                     label="Date Ordered"
                     name="dateOrdered"
                     value={formValues.dateOrdered}
-                    onChange={handleDateChange}
+                    onChange={(e) =>
+                      handleDateChange(e, formValues, setFormValues)
+                    }
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
@@ -146,7 +145,9 @@ const AddBacklink = ({ setBacklink }) => {
                   <Select
                     name="orderStatus"
                     value={formValues.orderStatus}
-                    onChange={handleInputChange}
+                    onChange={(e) =>
+                      handleInputChange(e, formValues, setFormValues)
+                    }
                     input={<Input />}
                   >
                     {/* Need to figure out what options should be included here */}
@@ -165,7 +166,9 @@ const AddBacklink = ({ setBacklink }) => {
                 label="Vendor"
                 name="vendor"
                 value={formValues.vendor}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange(e, formValues, setFormValues)
+                }
               />
             </div>
             <div>
@@ -175,7 +178,9 @@ const AddBacklink = ({ setBacklink }) => {
                 label="Language"
                 name="contentLanguage"
                 value={formValues.contentLanguage}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange(e, formValues, setFormValues)
+                }
               />
             </div>
             <Grid container justify="space-between" spacing={1}>
@@ -186,7 +191,9 @@ const AddBacklink = ({ setBacklink }) => {
                   label="Price"
                   name="price"
                   value={formValues.price}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    handleInputChange(e, formValues, setFormValues)
+                  }
                 />
               </Grid>
               <Grid item xs>
@@ -195,7 +202,9 @@ const AddBacklink = ({ setBacklink }) => {
                   <Select
                     name="currency"
                     value={formValues.currency}
-                    onChange={handleInputChange}
+                    onChange={(e) =>
+                      handleInputChange(e, formValues, setFormValues)
+                    }
                     input={<Input />}
                   >
                     <MenuItem value="GBP">GBP (£)</MenuItem>
