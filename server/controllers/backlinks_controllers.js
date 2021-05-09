@@ -16,7 +16,7 @@ module.exports = {
     backlink
       .save()
       .then((newBacklink) => res.send(newBacklink))
-      .catch((err) => res.status(422).send({ error: err.message }));
+      .catch((err) => res.status(422).send(err));
   },
 
   editBacklinks(req, res) {

@@ -35,11 +35,13 @@ const BacklinkForm = ({
   setFormValues,
   openStatus,
   setOpenStatus,
+  errors,
   handleSubmit,
   formTitle,
   formDescription,
 }) => {
   const classes = useStyles();
+
   return (
     <Dialog
       fullWidth
@@ -53,6 +55,9 @@ const BacklinkForm = ({
         <form onSubmit={handleSubmit}>
           <div>
             <TextField
+              required
+              error={errors?.targetUrl}
+              helperText={errors?.targetUrl}
               margin="dense"
               fullWidth
               label="Target URL"
@@ -63,6 +68,9 @@ const BacklinkForm = ({
           </div>
           <div>
             <TextField
+              required
+              error={errors?.backlinkUrl}
+              helperText={errors?.backlinkUrl}
               margin="dense"
               fullWidth
               label="Backlink URL"
@@ -72,6 +80,7 @@ const BacklinkForm = ({
             />
             <div>
               <TextField
+                error={errors?.anchor}
                 margin="dense"
                 fullWidth
                 label="Anchor"
@@ -102,7 +111,12 @@ const BacklinkForm = ({
               </MuiPickersUtilsProvider>
             </Grid>
             <Grid item xs>
-              <FormControl className={classes.formControl} margin="dense">
+              <FormControl
+                required
+                error={errors?.orderStatus}
+                className={classes.formControl}
+                margin="dense"
+              >
                 <InputLabel>Order Status</InputLabel>
                 <Select
                   name="orderStatus"
@@ -123,6 +137,7 @@ const BacklinkForm = ({
           </Grid>
           <div>
             <TextField
+              error={errors?.vendor}
               margin="dense"
               fullWidth
               label="Vendor"
@@ -133,6 +148,9 @@ const BacklinkForm = ({
           </div>
           <div>
             <TextField
+              required
+              error={errors?.contentLanguage}
+              helperText={errors?.contentLanguage}
               margin="dense"
               fullWidth
               label="Language"
@@ -144,6 +162,7 @@ const BacklinkForm = ({
           <Grid container justify="space-between" spacing={1}>
             <Grid item xs>
               <TextField
+                error={errors?.price}
                 margin="dense"
                 fullWidth
                 label="Price"
@@ -155,7 +174,11 @@ const BacklinkForm = ({
               />
             </Grid>
             <Grid item xs>
-              <FormControl className={classes.formControl} margin="dense">
+              <FormControl
+                error={errors?.currency}
+                className={classes.formControl}
+                margin="dense"
+              >
                 <InputLabel>Currency</InputLabel>
                 <Select
                   name="currency"
@@ -201,6 +224,7 @@ BacklinkForm.propTypes = {
   setFormValues: PropTypes.func.isRequired,
   openStatus: PropTypes.bool.isRequired,
   setOpenStatus: PropTypes.func.isRequired,
+  errors: PropTypes.objectOf(PropTypes.string).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   formTitle: PropTypes.string.isRequired,
   formDescription: PropTypes.string.isRequired,

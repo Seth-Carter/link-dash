@@ -21,9 +21,11 @@ const initialFormState = {
   price: '',
   currency: '',
 };
+
 const AddBacklink = ({ setBacklink }) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [formValues, setFormValues] = useState(initialFormState);
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,9 +37,17 @@ const AddBacklink = ({ setBacklink }) => {
       .then((res) => {
         setBacklink(res.data._id);
         setFormValues(initialFormState);
+        setErrors({});
         handleClose(setOpenStatus);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const errorData = err.response.data.errors;
+        const newErrors = {};
+        Object.keys(errorData).forEach((key) => {
+          newErrors[key] = errorData[key].message;
+        });
+        setErrors(newErrors);
+      });
   };
 
   return (
@@ -56,6 +66,8 @@ const AddBacklink = ({ setBacklink }) => {
         setFormValues={setFormValues}
         openStatus={openStatus}
         setOpenStatus={setOpenStatus}
+        errors={errors}
+        setErrors={setErrors}
         handleInputChange={handleInputChange}
         handleDateChange={handleDateChange}
         handleSubmit={handleSubmit}

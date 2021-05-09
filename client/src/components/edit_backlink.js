@@ -25,6 +25,7 @@ const EditBacklink = ({ data, setBacklink }) => {
 
   const [openStatus, setOpenStatus] = useState(false);
   const [formValues, setFormValues] = useState(() => dataHandler(data));
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +38,14 @@ const EditBacklink = ({ data, setBacklink }) => {
         setBacklink(res.data);
         setOpenStatus(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const errorData = err.response.data.errors;
+        const newErrors = {};
+        Object.keys(errorData).forEach((key) => {
+          newErrors[key] = errorData[key].message;
+        });
+        setErrors(newErrors);
+      });
   };
 
   return (
@@ -55,6 +63,7 @@ const EditBacklink = ({ data, setBacklink }) => {
         formValues={formValues}
         setFormValues={setFormValues}
         openStatus={openStatus}
+        errors={errors}
         setOpenStatus={setOpenStatus}
         handleInputChange={handleInputChange}
         handleDateChange={handleDateChange}
