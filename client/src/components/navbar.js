@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -19,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textDecoration: 'none',
+    color: theme.palette.common.white,
+  },
+  loginButton: {
+    textDecoration: 'none',
+    color: theme.palette.common.white,
   },
 }));
 
@@ -37,9 +44,13 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6">
-            Link Dash
+            <Link className={classes.title} to="/">
+              Link Dash
+            </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Link className={classes.loginButton} to="/login">
+            <Button color="inherit">Login</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
