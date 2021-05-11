@@ -11,7 +11,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import axios from 'axios';
-import { handleClickOpen, handleClose } from '../utils/handlers/click_handlers';
+import { handleClickOpen, handleClose } from '../utils/handlers/handlers';
 
 const DeleteBacklink = ({ _id, setBacklink }) => {
   const [openStatus, setOpenStatus] = useState(false);

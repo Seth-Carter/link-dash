@@ -7,7 +7,7 @@ import {
   handleClose,
   handleInputChange,
   handleDateChange,
-} from '../utils/handlers/click_handlers';
+} from '../utils/handlers/handlers';
 import BacklinkForm from './backlink_form';
 
 const initialFormState = {

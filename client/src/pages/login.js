@@ -10,12 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
-
-const initialLoginValues = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
+import { handleInputChange } from '../utils/handlers/handlers';
 
 const useStyles = makeStyles((theme) => ({
   centerForm: {
@@ -44,7 +39,22 @@ const useStyles = makeStyles((theme) => ({
   spacer: {
     height: '4px',
   },
+  focusedInput: {
+    '& .MuiInputAdornment-root .MuiSvgIcon-root': {
+      color: theme.palette.text.disabled,
+    },
+    '& .Mui-focused .MuiInputAdornment-root .MuiSvgIcon-root': {
+      // color: theme.palette.primary.main,
+      color: theme.palette.primary.main,
+    },
+  },
 }));
+
+const initialLoginValues = {
+  email: '',
+  password: '',
+  showPassword: false,
+};
 
 const Login = () => {
   const classes = useStyles();
@@ -69,10 +79,14 @@ const Login = () => {
                 label="Email"
                 name="email"
                 value={loginValues.email}
+                className={classes.focusedInput}
+                onChange={(e) =>
+                  handleInputChange(e, loginValues, setLoginValues)
+                }
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <AccountCircle color="disabled" />
+                      <AccountCircle />
                     </InputAdornment>
                   ),
                 }}
@@ -84,7 +98,12 @@ const Login = () => {
                 variant="outlined"
                 label="Password"
                 name="password"
+                type={loginValues.showPassword ? 'text' : 'password'}
                 value={loginValues.password}
+                className={classes.focusedInput}
+                onChange={(e) =>
+                  handleInputChange(e, loginValues, setLoginValues)
+                }
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -95,7 +114,12 @@ const Login = () => {
               />
             </div>
             <div>
-              <Button fullWidth color="primary" variant="contained">
+              <Button
+                type="submit"
+                fullWidth
+                color="primary"
+                variant="contained"
+              >
                 Submit
               </Button>
             </div>
