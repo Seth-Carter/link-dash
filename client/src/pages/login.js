@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.disabled,
     },
     '& .Mui-focused .MuiInputAdornment-root .MuiSvgIcon-root': {
-      // color: theme.palette.primary.main,
       color: theme.palette.primary.main,
     },
   },
@@ -60,6 +59,8 @@ const Login = () => {
   const classes = useStyles();
   const [errors, setErrors] = useState({});
   const [loginValues, setLoginValues] = useState(initialLoginValues);
+
+  const handleSubmit = () => {};
 
   return (
     <>

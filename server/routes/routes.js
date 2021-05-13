@@ -1,5 +1,6 @@
 const BacklinksController = require("../controllers/backlinks_controllers");
-const UserController = require("../controllers/user_controllers.js");
+const UserController = require("../controllers/user_controllers");
+const auth = require("../middleware/user_middleware");
 
 module.exports = (app) => {
   app.get("/api", UserController.greeting);

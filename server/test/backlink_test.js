@@ -77,9 +77,7 @@ describe("The backlink route", () => {
     editTestBacklink
       .save()
       .then((record) => {
-        console.log(record);
         requestBody._idArray.push(record._id);
-        console.log(requestBody);
 
         request(app)
           .post("/api/backlink/edit")
