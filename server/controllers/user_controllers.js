@@ -33,8 +33,7 @@ module.exports = {
             })
             .catch((err) => res.status(422).send({ error: err.message }));
         }
-      })
-      .catch((err) => console.error(err));
+      });
   },
 
   login(req, res) {
@@ -49,25 +48,24 @@ module.exports = {
             );
         }
         userData.user = user;
-        return bcrypt.compare(req.body.password, user.password);
+        bcrypt.compare(req.body.password, user.password)
+          .then((validPassword) => {
+            if (!validPassword) {
+              return res
+                .status(401)
+                .send("The email or password entered is incorrect.");
+            }
+            const token = jwt.sign(
+              { _id: userData.user._id },
+              config.get("PrivateKey"),
+              { expiresIn: "1d" }
+            );
+            res.header("Authorization", `Bearer ${token}`).send({
+              _id: userData.user._id,
+              name: userData.user.name,
+              email: userData.user.email,
+            });
+          });
       })
-      .then((validPassword) => {
-        if (!validPassword) {
-          return res
-            .status(401)
-            .send("The email or password entered is incorrect.");
-        }
-        const token = jwt.sign(
-          { _id: userData.user._id },
-          config.get("PrivateKey"),
-          { expiresIn: "1d" }
-        );
-        res.header("Authorization", `Bearer ${token}`).send({
-          _id: userData.user._id,
-          name: userData.user.name,
-          email: userData.user.email,
-        });
-      })
-      .catch((err) => console.error(err));
   },
 };

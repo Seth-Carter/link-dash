@@ -3,13 +3,13 @@ import {
   TextField,
   Paper,
   Typography,
-  Grid,
   Button,
   InputAdornment,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
+import axios from 'axios';
 import { handleInputChange } from '../utils/handlers/handlers';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +60,23 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [loginValues, setLoginValues] = useState(initialLoginValues);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post('/api/user/login', {
+        email: loginValues.email,
+        password: loginValues.password,
+      })
+      .then((res) => {
+        console.log(res.headers);
+        sessionStorage.setItem('linkDashToken', res.headers.authorization);
+        window.location.href = '/';
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setErrors(err.response.data);
+      });
+  };
 
   return (
     <>
@@ -72,9 +88,10 @@ const Login = () => {
               Login
             </Typography>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
               <TextField
+                required
                 fullWidth
                 variant="outlined"
                 label="Email"
@@ -95,6 +112,7 @@ const Login = () => {
             </div>
             <div>
               <TextField
+                required
                 fullWidth
                 variant="outlined"
                 label="Password"
