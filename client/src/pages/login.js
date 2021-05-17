@@ -62,19 +62,20 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors({});
     axios
       .post('/api/user/login', {
         email: loginValues.email,
         password: loginValues.password,
       })
       .then((res) => {
-        console.log(res.headers);
         sessionStorage.setItem('linkDashToken', res.headers.authorization);
         window.location.href = '/';
       })
       .catch((err) => {
-        console.log(err.response.data);
-        setErrors(err.response.data);
+        const loginErrors = {};
+        loginErrors.error = err.response.data;
+        setErrors(loginErrors);
       });
   };
 
@@ -91,6 +92,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div>
               <TextField
+                error={Boolean(errors.error)}
                 required
                 fullWidth
                 variant="outlined"
@@ -112,6 +114,8 @@ const Login = () => {
             </div>
             <div>
               <TextField
+                helperText={errors.error}
+                error={Boolean(errors.error)}
                 required
                 fullWidth
                 variant="outlined"
