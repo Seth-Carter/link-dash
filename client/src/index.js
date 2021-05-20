@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+const token = sessionStorage.getItem('linkDashToken');
+axios.defaults.headers.common.Authorization = token ?? '';
 
 ReactDOM.render(
   <React.StrictMode>

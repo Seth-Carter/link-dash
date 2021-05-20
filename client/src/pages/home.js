@@ -63,7 +63,6 @@ const Home = () => {
       const filterObject = {
         filters: { dateOrdered: { ...filterValues } },
       };
-
       axios
         .post(
           `/api/backlink/fetch?page=${page}&limit=${rowsPerPage}`,
@@ -75,6 +74,7 @@ const Home = () => {
         })
         .catch((err) => console.error(err));
     };
+
     setLoading(true);
     loadData();
   }, [page, rowsPerPage, backlink]);

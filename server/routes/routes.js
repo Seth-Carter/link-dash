@@ -9,11 +9,11 @@ module.exports = (app) => {
 
   app.post("/api/user/login", UserController.login);
 
-  app.post("/api/backlink/new", BacklinksController.createBacklink);
+  app.post("/api/backlink/new", auth, BacklinksController.createBacklink);
 
-  app.post("/api/backlink/fetch", BacklinksController.fetchBacklinks);
+  app.post("/api/backlink/fetch", auth, BacklinksController.fetchBacklinks);
 
-  app.post("/api/backlink/delete", BacklinksController.deleteBacklinks);
+  app.post("/api/backlink/delete", auth, BacklinksController.deleteBacklinks);
 
-  app.post("/api/backlink/edit", BacklinksController.editBacklinks);
+  app.post("/api/backlink/edit", auth, BacklinksController.editBacklinks);
 };
