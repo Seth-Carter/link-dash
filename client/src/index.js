@@ -7,7 +7,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const token = sessionStorage.getItem('linkDashToken');
-axios.defaults.headers.common.Authorization = token ?? '';
+
+axios.interceptors.request.use(
+  (req) => {
+    if (req.url.includes('backlink')) {
+      req.headers.Authorization = token ?? '';
+    }
+    return req;
+  },
+  (err) => Promise.reject(err)
+);
 
 ReactDOM.render(
   <React.StrictMode>
