@@ -24,12 +24,8 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Home} />
           </Switch>
         </BrowserRouter>
       </>
